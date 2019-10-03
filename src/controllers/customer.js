@@ -8,6 +8,6 @@ exports.create = (req, res) => {
     password: req.body.password,
   });
   customer.save().then(() => {
-    res.status(200).send(customer);
+    res.status(201).send(customer);
   });
 };

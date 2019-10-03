@@ -1,7 +1,6 @@
 const Customer = require('../src/models/customer');
 const chai = require('chai');
 
-
 describe('/artists', () => {
   beforeEach((done) => {
     Customer.deleteMany({}, () => {
