@@ -1,7 +1,7 @@
 const Customer = require('../src/models/customer');
 const chai = require('chai');
 
-describe('/artists', () => {
+describe('/customers', () => {
   beforeEach((done) => {
     Customer.deleteMany({}, () => {
       done();
@@ -27,7 +27,8 @@ describe('/artists', () => {
             expect(customer.firstName).to.equal('Linda');
             expect(customer.lastName).to.equal('Hunny');
             expect(customer.email).to.equal('linda@hunny.com');
-            expect(customer.password).to.equal('lindaHunny1');
+            expect(customer.password).to.not.equal('lindaHunny1');
+            expect(customer.password).to.have.length(60);
             done();
           });
         });
