@@ -1,13 +1,21 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const { Schema } = require('mongoose');
+const isEmail = require('isemail');
 
 
 const customerSchema = new Schema({
   firstName: String,
   lastName: String,
-  email: String,
-  password: String,
+  email: {
+    type: String,
+    validate: [isEmail.validate, 'Invalid email address'],
+  },
+  password: {
+    type: String,
+    required: [true, 'Password is invalid'],
+    minlength: 8,
+  },
 });
 
 customerSchema.pre('save', function encryptPassword(next) {
@@ -26,6 +34,11 @@ customerSchema.methods.sanitise = function () {
   const { password, ...rest } = customerObject;
   return rest;
 };
+
+customerSchema.methods.countDocuments = function (err, count) {
+  return count;
+};
+
 
 const Customer = mongoose.model('Customer', customerSchema);
 
