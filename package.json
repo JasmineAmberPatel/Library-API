@@ -13,7 +13,9 @@
     "mocha": "^6.2.1",
     "mongoose": "^5.7.3"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "nodemon": "^1.19.3"
+  },
   "scripts": {
     "test": "mocha tests/**/*.test.js --opts .mocha.opts",
     "start": "nodemon -r dotenv/config index.js",

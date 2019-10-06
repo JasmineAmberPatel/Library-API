@@ -29,6 +29,7 @@ describe('/customers', () => {
             expect(customer.email).to.equal('linda@hunny.com');
             expect(customer.password).to.not.equal('lindaHunny1');
             expect(customer.password).to.have.length(60);
+            expect(res.body).not.to.have.property('password');
             done();
           });
         });
