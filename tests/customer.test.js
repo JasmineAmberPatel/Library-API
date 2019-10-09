@@ -1,9 +1,10 @@
 const Customer = require('../src/models/customer');
 const chai = require('chai');
+const DataFactory = require('./helpers/data-factory');
 
 describe('/customers', () => {
   beforeEach((done) => {
-    Customer.deleteMany({}, () => {
+    Customer.deleteMany({}, (error) => {
       done();
     });
   });
@@ -34,27 +35,29 @@ describe('/customers', () => {
           });
         });
     });
+
     it('checks the customers email address is valid', (done) => {
       chai.request(server)
         .post('/customers')
         .send({
           firstName: 'Linda',
           lastName: 'Hunny',
-          email: 'linda@hunny.cheesecake.com',
+          email: 'linda',
           password: 'lindaHunny1',
         })
         .end((error, res) => {
           expect(error).to.equal(null);
-          expect(res.status).to.equal(404);
+          expect(res.status).to.equal(400);
 
           Customer.findById(res.body._id, (err, customer) => {
             expect(err).to.equal(null);
+            expect(res.status).to.equal(400);
             expect(res.body.errors.email).to.equal('Invalid email address');
-            expect(customer.countDocuments).to.equal(0);
             done();
           });
         });
     });
+
     it('checks the customers password is valid', (done) => {
       chai.request(server)
         .post('/customers')
@@ -66,11 +69,12 @@ describe('/customers', () => {
         })
         .end((error, res) => {
           expect(error).to.equal(null);
-          expect(res.status).to.equal(404);
+          expect(res.status).to.equal(400);
 
           Customer.findById(res.body._id, (err, customer) => {
             expect(err).to.equal(null);
-            expect(res.body.errors.password).to.equal('Invalid password');
+            expect(res.status).to.equal(400);
+            expect(res.body.errors.password).to.equal('Password is invalid');
             done();
           });
         });

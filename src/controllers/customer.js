@@ -7,26 +7,23 @@ exports.create = (req, res) => {
     email: req.body.email,
     password: req.body.password,
   });
+
   customer.save()
     .then(() => {
       res.status(201).json(customer.sanitise());
     })
     .catch((error) => {
       if (error.name === 'ValidationError') {
-        const emailError = error.errors.email ? error.errors.email.message : null; 
+        const emailError = error.errors.email ? error.errors.email.message : null;
+        const passwordError = error.errors.password ? error.errors.password.message : null;
         res.status(400).json({
           errors: {
             email: emailError,
-          },
-        });
-      } else 
-      if (error.name === 'ValidationError') {
-        const passwordError = error.errors.password ? error.errors.password.message : null; 
-        res.status(400).json({
-          errors: {
             password: passwordError,
           },
         });
-      res.sendStatus(500);
-    }
-  });
+      } else {
+        res.sendStatus(500);
+      }
+    });
+};
