@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const path = require('path');
 const app = require('./src/app');
+const Customer = require('./src/models/customer');
 
 let server = null;
 
@@ -29,6 +30,12 @@ before((done) => {
     // set the server address as a global variable
     global.server = `http://127.0.0.1:${server.address().port}`;
 
+    done();
+  });
+});
+
+beforeEach((done) => {
+  Customer.deleteMany({}, (error) => {
     done();
   });
 });
