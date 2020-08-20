@@ -4,7 +4,7 @@
   "description": "library project",
   "main": "index.js",
   "dependencies": {
-    "bcrypt": "^3.0.0",
+    "bcrypt": "^5.0.0",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "dotenv": "^8.1.0",
